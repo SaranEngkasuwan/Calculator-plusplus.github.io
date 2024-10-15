@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator++</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* ทำให้เต็มหน้าจอ */
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5); /* ไล่สี */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px; /* ขนาดของฟอนต์ */
+            color: #333; /* สีของข้อความ */
+        }
+
+        .button {
+            background-color: #4CAF50; /* สีพื้นหลัง */
+            border: none; /* ไม่มีกรอบ */
+            color: white; /* สีตัวอักษร */
+            padding: 15px 32px; /* ขนาดของปุ่ม */
+            text-align: center; /* จัดกลาง */
+            text-decoration: none; /* ไม่มีเส้นใต้ */
+            display: inline-block; /* แสดงเป็นบล็อก */
+            font-size: 16px; /* ขนาดตัวอักษร */
+            margin: 4px 2px; /* ระยะห่าง */
+            transition-duration: 0.4s; /* เวลาผลิตผล */
+            cursor: pointer; /* แสดงลูกศร */
+            border-radius: 12px; /* มุมโค้ง */
+        }
+
+        .button:hover {
+            background-color: white; /* สีพื้นหลังเมื่อวางเมาส์ */
+            color: black; /* สีตัวอักษรเมื่อวางเมาส์ */
+            border: 2px solid #4CAF50; /* กรอบเมื่อวางเมาส์ */
+        }
+    </style>
+    <script>
+        function goToPage() {
+            window.location.href = 'another_page.html'; // เปลี่ยนเส้นทางไปยัง another_page.html
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculator++</h1>
+        <a href="indexCalculator.html" class="button">Calculator</a>
+        <a href="indexBMI.html" class="button">BMI Calculator</a>
+        <a href="indexBMR.html" class="button">BMR Calculator</a> 
+        <a href="indexCurrency.html" class="button">Currency Exchange</a>
+        <a href="indexChangeunit.html" class="button">Change the unit</a>
+    </div>
+</body>
+</html>

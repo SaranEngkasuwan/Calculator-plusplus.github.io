@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <!-- ประกาศเอกสารเป็น HTML5 และกำหนดภาษาเป็นภาษาไทย -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ชื่อของหน้าเว็บ -->
+    <title>เครื่องคิดเลข</title>
+    <style>
+        /* กำหนดสไตล์พื้นฐานให้กับหน้าเว็บทั้งหมด */
+        body {
+            font-family: 'Arial', sans-serif; /* ใช้ฟอนต์ Arial */
+            background: linear-gradient(135deg, #74ebd5, #acb6e5); /* ไล่สี */
+            display: flex; /* จัดการตำแหน่งให้เป็น flexbox */
+            justify-content: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
+            align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+            height: 100vh; /* ใช้ความสูงเต็มหน้าจอ */
+            margin: 0; /* ลบ margin */
+        }
+
+        /* กำหนดสไตล์ให้กับกล่องเครื่องคิดเลข */
+        .calculator {
+            background-color: #fff; /* สีพื้นหลังสีขาว */
+            padding: 20px; /* ขอบใน 20px */
+            border-radius: 10px; /* มุมกล่องโค้งมน */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เงารอบกล่อง */
+            text-align: center; /* จัดข้อความกลาง */
+            width: 260px; /* กำหนดความกว้างของกล่อง */
+            position: relative; /* เพื่อให้ข้อความไล่สีอยู่ในตำแหน่งที่ถูกต้อง */
+        }
+
+        /* สไตล์สำหรับหัวข้อ */
+        h2 {
+            font-size: 35px;
+            font-weight: bold;
+            text-align: center;
+            background: linear-gradient(90deg, #FFA500, #FFD700); /* ไล่สีจากส้มไปส้มอ่อน */
+            background-clip: text; /* ตัดสีแบ็กกราวด์ตามข้อความ */
+            color: transparent; /* ทำให้ข้อความโปร่งใส */
+            margin: 0; /* ลบ margin */
+            padding: 10px; /* ขอบในเล็กน้อย */
+        }
+
+        /* สไตล์สำหรับช่องแสดงผลลัพธ์ */
+        #result {
+            width: 90%; /* ให้ช่องแสดงผลกว้างเต็ม */
+            height: 40px; /* ความสูงของช่อง */
+            margin-bottom: 10px; /* ระยะห่างด้านล่าง */
+            font-size: 1.5rem; /* ขนาดฟอนต์ */
+            text-align: right; /* จัดข้อความไปทางขวา */
+            padding-right: 10px; /* ระยะห่างภายในด้านขวา */
+            border: 1px solid #ccc; /* ขอบสีเทาอ่อน */
+            border-radius: 5px; /* มุมโค้งมน */
+        }
+
+        /* จัดปุ่มเป็นรูปแบบ grid */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* กำหนด 4 คอลัมน์ที่มีขนาดเท่ากัน */
+            gap: 10px; /* ระยะห่างระหว่างปุ่ม */
+        }
+
+        /* สไตล์พื้นฐานสำหรับปุ่มทั้งหมด */
+        button {
+            height: 50px; /* ความสูงของปุ่ม */
+            font-size: 1.2rem; /* ขนาดฟอนต์ของปุ่ม */
+            border: none; /* ไม่มีขอบ */
+            border-radius: 5px; /* มุมโค้งมน */
+            background-color: #e0e0e0; /* สีพื้นหลังเทาอ่อน */
+            cursor: pointer; /* เปลี่ยน cursor เป็น pointer เมื่อ hover */
+            transition: background-color 0.3s; /* เพิ่มการเปลี่ยนสีอย่างราบรื่น */
+        }
+
+        /* สไตล์เมื่อ hover ที่ปุ่ม */
+        button:hover {
+            background-color: #d0d0d0; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
+        }
+
+        /* สไตล์สำหรับปุ่มเท่ากับ */
+        .equal {
+            grid-column: span 1; /* ให้ปุ่มกิน 1 คอลัมน์ */
+            background-color: #007bff; /* สีพื้นหลังสีเขียว */
+            color: white; /* สีตัวอักษรสีขาว */
+        }
+
+        /* สไตล์เมื่อ hover ที่ปุ่มเท่ากับ */
+        .equal:hover {
+            background-color: #0056b3; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
+        }
+
+        .button2 {
+            background-color: #4CAF50; /* สีพื้นหลัง */
+            border: none; /* ไม่มีขอบ */
+            color: white; /* สีตัวอักษร */
+            padding: 15px 32px; /* ขนาดปุ่ม */
+            text-align: center; /* จัดกลาง */
+            text-decoration: none; /* ไม่มีเส้นใต้ */
+            display: inline-block; /* แสดงแบบบล็อค */
+            font-size: 16px; /* ขนาดฟอนต์ */
+            margin-top: 20px ; /* ระยะห่าง */
+            margin-bottom: 2px;
+            transition-duration: 0.4s; /* เวลาการเปลี่ยนแปลง */
+            cursor: pointer; /* แสดงว่าเป็นปุ่มคลิกได้ */
+            border-radius: 12px; /* มุมโค้ง */
+            width: 75%; /* ความกว้าง 80% */
+        }
+        
+        /* เอฟเฟกต์เมื่อวางเมาส์เหนือปุ่มเขียว */
+        .button2:hover {
+            background-color: white; /* สีพื้นหลังเมื่อวางเมาส์ */
+            color: black; /* สีตัวอักษรเมื่อวางเมาส์ */
+            border: 2px solid #4CAF50; /* ขอบเมื่อวางเมาส์ */
+        }
+    </style>
+</head>
+<body>
+    <!-- กล่องหลักของเครื่องคิดเลข -->
+    <div class="calculator">
+        <!-- หัวข้อแสดงชื่อเครื่องคิดเลข -->
+        <h2>calculator</h2>
+        <!-- ช่องแสดงผลลัพธ์ของการคำนวณ -->
+        <input type="text" id="result" disabled>
+        <!-- ส่วนของปุ่มตัวเลขและเครื่องหมายต่าง ๆ -->
+        <div class="buttons">
+            <!-- ปุ่มล้างหน้าจอทั้งหมด -->
+            <button onclick="clearScreen()">C</button>
+            <!-- ปุ่มลบตัวสุดท้าย -->
+            <button onclick="deleteLast()">DEL</button>
+            <!-- ปุ่มวงเล็บเปิด -->
+            <button onclick="appendToResult('(')">(</button>
+            <!-- ปุ่มวงเล็บปิด -->
+            <button onclick="appendToResult(')')">)</button>
+            <!-- ปุ่มตัวเลข 7 -->
+            <button onclick="appendToResult('7')">7</button>
+            <!-- ปุ่มตัวเลข 8 -->
+            <button onclick="appendToResult('8')">8</button>
+            <!-- ปุ่มตัวเลข 9 -->
+            <button onclick="appendToResult('9')">9</button>
+            <!-- ปุ่มเครื่องหมายหาร -->
+            <button onclick="appendToResult('/')">/</button>
+            <!-- ปุ่มตัวเลข 4 -->
+            <button onclick="appendToResult('4')">4</button>
+            <!-- ปุ่มตัวเลข 5 -->
+            <button onclick="appendToResult('5')">5</button>
+            <!-- ปุ่มตัวเลข 6 -->
+            <button onclick="appendToResult('6')">6</button>
+            <!-- ปุ่มเครื่องหมายคูณ -->
+            <button onclick="appendToResult('*')">*</button>
+            <!-- ปุ่มตัวเลข 1 -->
+            <button onclick="appendToResult('1')">1</button>
+            <!-- ปุ่มตัวเลข 2 -->
+            <button onclick="appendToResult('2')">2</button>
+            <!-- ปุ่มตัวเลข 3 -->
+            <button onclick="appendToResult('3')">3</button>
+            <!-- ปุ่มเครื่องหมายลบ -->
+            <button onclick="appendToResult('-')">-</button>
+            <!-- ปุ่มเครื่องหมายเท่ากับ สำหรับคำนวณผลลัพธ์ -->
+            <button onclick="calculateResult()" class="equal">=</button>
+            <!-- ปุ่มตัวเลข 0 -->
+            <button onclick="appendToResult('0')">0</button>
+            <!-- ปุ่มจุดทศนิยม -->
+            <button onclick="appendToResult('.')">.</button>
+            <!-- ปุ่มเครื่องหมายบวก -->
+            <button onclick="appendToResult('+')">+</button>
+        </div>
+
+        <div>
+            <a href="index.html" class="button2">หน้าหลัก</a> <!-- ลิงก์ไปยังหน้าแรก -->
+        </div>
+    </div>
+    <script>
+        // ฟังก์ชันเคลียร์หน้าจอ แสดงผลลัพธ์เป็นค่าว่าง
+        function clearScreen() {
+            document.getElementById("result").value = "";
+        }
+
+        // ฟังก์ชันลบตัวสุดท้ายออกจากช่องแสดงผล
+        function deleteLast() {
+            let current = document.getElementById("result").value; // ดึงค่าปัจจุบันในช่องแสดงผล
+            document.getElementById("result").value = current.slice(0, -1); // ลบตัวสุดท้ายออก
+        }
+
+        // ฟังก์ชันเพิ่มค่าหรือเครื่องหมายในช่องแสดงผล
+        function appendToResult(value) {
+            document.getElementById("result").value += value; // เพิ่มค่าหรือเครื่องหมายลงไปในช่องแสดงผล
+        }
+
+        // ฟังก์ชันคำนวณผลลัพธ์
+        function calculateResult() {
+            try {
+                // ใช้ eval() เพื่อคำนวณค่าที่อยู่ในช่องแสดงผล
+                let result = eval(document.getElementById("result").value);
+                document.getElementById("result").value = result; // แสดงผลลัพธ์ในช่องแสดงผล
+            } catch (e) {
+                // ถ้ามีข้อผิดพลาดในการคำนวณ เช่น กรอกสมการไม่ถูกต้อง
+                document.getElementById("result").value = "Error"; // แสดงข้อความ "Error" ในช่องแสดงผล
+            }
+        }
+    </script>
+</body>
+</html>
