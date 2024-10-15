@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เปลี่ยนหน่วย</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5); /* ไล่สี */
+            display: flex;
+            justify-content: center; /* จัดแนวกลางในแนวนอน */
+            align-items: center; /* จัดแนวกลางในแนวตั้ง */
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px; /* ขยายความกว้าง */
+            padding: 40px 20px; /* เพิ่มการ padding ให้น้อยลงจากด้านข้าง */
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box; /* ทำให้การคำนวณความกว้างถูกต้อง */
+            transition: transform 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px); /* ยกขึ้นเล็กน้อยเมื่อชี้ */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em; /* ปรับขนาดตัวอักษร */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="number"], select {
+            width: 100%; /* ให้เต็มความกว้าง */
+            padding: 12px; /* เพิ่มการ padding */
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; /* ทำให้การคำนวณความกว้างถูกต้อง */
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: #007bff; /* เปลี่ยนสีกรอบเมื่อชี้ */
+            outline: none; /* ไม่แสดงเส้นรอบนอก */
+        }
+
+        button {
+            width: 100%;
+            padding: 12px; /* เพิ่มการ padding */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* ขยายเล็กน้อยเมื่อชี้ */
+        }
+
+        h2 {
+            text-align: center;
+            color: #28a745;
+            margin-top: 20px;
+            font-size: 1.5em; /* ปรับขนาดตัวอักษร */
+        }
+
+        #result {
+            font-weight: bold;
+        }
+
+        .button2 {
+            background-color: #4CAF50; /* สีพื้นหลัง */
+            border: none; /* ไม่มีขอบ */
+            color: white; /* สีตัวอักษร */
+            padding: 15px 25px; /* ขนาดปุ่ม */
+            text-align: center; /* จัดกลาง */
+            text-decoration: none; /* ไม่มีเส้นใต้ */
+            display: inline-block; /* แสดงแบบบล็อค */
+            font-size: 16px; /* ขนาดฟอนต์ */
+            margin-top: 10px ; /* ระยะห่าง */
+            margin-bottom: 2px;
+            transition-duration: 0.4s; /* เวลาการเปลี่ยนแปลง */
+            cursor: pointer; /* แสดงว่าเป็นปุ่มคลิกได้ */
+            border-radius: 12px; /* มุมโค้ง */
+            width: 78%; /* ความกว้าง 80% */
+        }
+        
+        /* เอฟเฟกต์เมื่อวางเมาส์เหนือปุ่มเขียว */
+        .button2:hover {
+            background-color: white; /* สีพื้นหลังเมื่อวางเมาส์ */
+            color: black; /* สีตัวอักษรเมื่อวางเมาส์ */
+            border: 2px solid #4CAF50; /* ขอบเมื่อวางเมาส์ */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>แปลงหน่วย</h1>
+        <label for="value">ค่า:</label>
+        <input type="number" id="value" placeholder="กรอกค่า" />
+
+        <label for="unitFrom">จากหน่วย:</label>
+        <select id="unitFrom">
+            <option value="kg">กิโลกรัม</option>
+            <option value="lb">ปอนด์</option>
+            <option value="m">เมตร</option>
+            <option value="ft">ฟุต</option>
+            <option value="celsius">เซลเซียส</option>
+            <option value="fahrenheit">ฟาเรนไฮต์</option>
+        </select>
+
+        <label for="unitTo">เป็นหน่วย:</label>
+        <select id="unitTo">
+            <option value="kg">กิโลกรัม</option>
+            <option value="lb">ปอนด์</option>
+            <option value="m">เมตร</option>
+            <option value="ft">ฟุต</option>
+            <option value="celsius">เซลเซียส</option>
+            <option value="fahrenheit">ฟาเรนไฮต์</option>
+        </select>
+
+        <button onclick="convert()">แปลง</button>
+
+        <h2>ผลลัพธ์: <span id="result"></span></h2>
+
+        <div>
+            <a href="index.html" class="button2">หน้าหลัก</a> <!-- ลิงก์ไปยังหน้าแรก -->
+        </div>
+    </div>
+
+    <script>
+        function convert() {
+            const value = parseFloat(document.getElementById("value").value);
+            const unitFrom = document.getElementById("unitFrom").value;
+            const unitTo = document.getElementById("unitTo").value;
+    
+            let result;
+
+            if (unitFrom === "kg" && unitTo === "lb") {
+                result = value * 2.20462; // แปลงกิโลกรัมเป็นปอนด์
+            } else if (unitFrom === "lb" && unitTo === "kg") {
+                result = value / 2.20462; // แปลงปอนด์เป็นกิโลกรัม
+            } else if (unitFrom === "m" && unitTo === "ft") {
+                result = value * 3.28084; // แปลงเมตรเป็นฟุต
+            } else if (unitFrom === "ft" && unitTo === "m") {
+                result = value / 3.28084; // แปลงฟุตเป็นเมตร
+            } else if (unitFrom === "celsius" && unitTo === "fahrenheit") {
+                result = (value * 9/5) + 32; // แปลงเซลเซียสเป็นฟาเรนไฮต์
+            } else if (unitFrom === "fahrenheit" && unitTo === "celsius") {
+                result = (value - 32) * 5/9; // แปลงฟาเรนไฮต์เป็นเซลเซียส
+            } else {
+            result = value ;
+        }
+
+            document.getElementById("result").textContent = result.toFixed(2);
+        }
+    </script>
+</body>
+</html>
